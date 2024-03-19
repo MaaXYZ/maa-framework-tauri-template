@@ -4,6 +4,7 @@ import TaskDispatch from "./views/TaskDispatch.vue";
 import { onMounted } from "vue";
 import CommandInvoker from "./CommandInvoker";
 import { useMaaStateStore } from "./stores/MaaStateStore";
+import CloseIcon from "./assets/icons/CloseIcon.vue";
 
 const maaStateStore = useMaaStateStore();
 
@@ -30,7 +31,7 @@ function closeWindow() {
             </div>
             <div class="controls">
                 <md-icon-button @click="closeWindow">
-                    <md-icon>close</md-icon>
+                    <CloseIcon />
                 </md-icon-button>
             </div>
         </div>

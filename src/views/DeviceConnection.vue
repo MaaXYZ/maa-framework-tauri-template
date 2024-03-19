@@ -50,7 +50,7 @@ function loadDevices() {
             v-else-if="deviceStateStore.devices.length == 0"
         >
             <p class="title_secondary">No devices found</p>
-            <md-filled-button @click="loadDevices" strong type="primary">
+            <md-filled-button @click="loadDevices" strong type="primary" class="mx-4">
                 Rescan Devices
             </md-filled-button>
         </div>

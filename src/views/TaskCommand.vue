@@ -5,6 +5,8 @@ import { TaskType, allTaskTypes } from "@/interface/TaskStatus";
 import CommandInvoker from "@/CommandInvoker";
 import { useToast } from "vue-toast-notification";
 import { useMaaStateStore } from "@/stores/MaaStateStore";
+import playArrowIcon from "@/assets/icons/play_arrow.svg";
+import PlayArrowIcon from "@/assets/icons/PlayArrowIcon.vue";
 
 const taskQueueStore = useTaskQueueStore();
 const maaStateStore = useMaaStateStore();
@@ -58,7 +60,7 @@ function startMiniWindow() {
     <div class="-mr-3 rounded-lg bg-white p-2 pt-4">
         <md-filled-button class="w-full" @click="queueAction"
             >Start
-            <md-icon slot="icon">play_arrow</md-icon>
+            <PlayArrowIcon slot="icon" />
         </md-filled-button>
 
         <!-- TODO: figure out how to change state with mini window open state -->

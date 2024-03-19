@@ -2,6 +2,8 @@
 import { computed, ref } from "vue";
 import DeviceInfo from "../interface/DeviceInfo";
 import { useDeviceStateStore } from "@/stores/DeviceStateStore";
+import DoneIcon from "@/assets/icons/DoneIcon.vue";
+import SendIcon from "@/assets/icons/SendIcon.vue";
 
 const props = defineProps<{
     device: DeviceInfo;
@@ -37,8 +39,8 @@ function connectToDevice() {
             :disabled="deviceConnected"
             @click="connectToDevice"
         >
-            <md-icon color="#55EE55" v-if="deviceConnected"> done </md-icon>
-            <md-icon v-else-if="!deviceConnecting"> send </md-icon>
+            <DoneIcon color="#55EE55" v-if="deviceConnected" />
+            <SendIcon v-else-if="!deviceConnecting" />
             <md-circular-progress indeterminate v-if="deviceConnecting" />
         </md-outlined-icon-button>
     </div>

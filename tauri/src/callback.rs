@@ -8,7 +8,7 @@ use tauri::{
 use tauri_plugin_notification::NotificationExt;
 use tracing::{error, info, trace_span};
 
-use crate::{ConfigHolderState, MaaZError, TaskQueueState};
+use crate::{ConfigHolderState, TaskQueueState};
 
 pub const CALLBACK_EVENT: &str = "callback";
 pub const QUEUE_DONE_EVENT: &str = "queue-done";
