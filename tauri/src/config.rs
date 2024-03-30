@@ -4,7 +4,7 @@ use serde::{Deserialize, Serialize};
 
 use crate::MaaZInnerResult;
 
-use self::start_up::StartUpConfig;
+use self::{app::AppConfig, start_up::StartUpConfig};
 
 pub mod start_up;
 pub mod app;
@@ -14,6 +14,8 @@ pub mod app;
 pub struct Config {
     #[serde(default)]
     pub start_up: StartUpConfig,
+    #[serde(default)]
+    pub app_config: AppConfig,
 }
 
 pub struct ConfigHolder {

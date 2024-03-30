@@ -5,6 +5,7 @@ import { onMounted } from "vue";
 import CommandInvoker from "./CommandInvoker";
 import { useMaaStateStore } from "./stores/MaaStateStore";
 import CloseIcon from "./assets/icons/CloseIcon.vue";
+import SettingsIcon from "./assets/icons/SettingsIcon.vue";
 
 const maaStateStore = useMaaStateStore();
 
@@ -18,6 +19,10 @@ onMounted(() => {
 function closeWindow() {
     CommandInvoker.closeWindow();
 }
+
+function openSettings() {
+    CommandInvoker.openSettings();
+}
 </script>
 
 <template>
@@ -30,6 +35,9 @@ function closeWindow() {
                 <span class="text-lg text-center font-bold">MAA Z</span>
             </div>
             <div class="controls">
+                <md-icon-button @click="openSettings">
+                    <SettingsIcon />
+                </md-icon-button>
                 <md-icon-button @click="closeWindow">
                     <CloseIcon />
                 </md-icon-button>

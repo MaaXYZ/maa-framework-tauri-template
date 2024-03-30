@@ -28,5 +28,6 @@ impl From<String> for ClientType {
 #[derive(Serialize, Deserialize, Default, Clone)]
 #[serde(rename_all = "camelCase")]
 pub struct StartUpConfig {
+    #[serde(default)]
     pub client_type: ClientType,
 }
