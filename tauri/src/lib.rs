@@ -96,6 +96,7 @@ pub fn run() {
             commands::init_maa,
             commands::start_mini_window,
             commands::set_window_on_top,
+            commands::open_settings_window
         ])
         .run(tauri::generate_context!());
 

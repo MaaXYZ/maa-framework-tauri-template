@@ -102,3 +102,8 @@ mock = []
 "tests_outside_test_module" = "deny"
 "undocumented_unsafe_blocks" = "deny"
 "unseparated_literal_suffix" = "deny"
+
+[profile.release]
+lto = true
+codegen-units = 1
+panic = "abort"

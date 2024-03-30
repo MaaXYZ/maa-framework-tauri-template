@@ -4,10 +4,13 @@ import DeviceInfo from "../interface/DeviceInfo";
 import { useDeviceStateStore } from "@/stores/DeviceStateStore";
 import DoneIcon from "@/assets/icons/DoneIcon.vue";
 import SendIcon from "@/assets/icons/SendIcon.vue";
+import { useToast } from "vue-toast-notification";
 
 const props = defineProps<{
     device: DeviceInfo;
 }>();
+
+const toast = useToast();
 
 const deviceStateStore = useDeviceStateStore();
 
@@ -21,9 +24,15 @@ const deviceConnecting = ref(false);
 
 function connectToDevice() {
     deviceConnecting.value = true;
-    deviceStateStore.connectTo(props.device).finally(() => {
-        deviceConnecting.value = false;
-    });
+    deviceStateStore
+        .connectTo(props.device)
+        .catch((e) => {
+            console.error(e);
+            toast.error("Failed to connect to device");
+        })
+        .finally(() => {
+            deviceConnecting.value = false;
+        });
 }
 </script>
 

@@ -5,7 +5,6 @@ import { TaskType, allTaskTypes } from "@/interface/TaskStatus";
 import CommandInvoker from "@/CommandInvoker";
 import { useToast } from "vue-toast-notification";
 import { useMaaStateStore } from "@/stores/MaaStateStore";
-import playArrowIcon from "@/assets/icons/play_arrow.svg";
 import PlayArrowIcon from "@/assets/icons/PlayArrowIcon.vue";
 
 const taskQueueStore = useTaskQueueStore();

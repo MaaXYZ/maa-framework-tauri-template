@@ -13,7 +13,7 @@ export default class CommandInvoker {
     }
 
     public static async connectTo(device: DeviceInfo): Promise<void> {
-        return invoke("connect_to_device", { device });
+        return invoke("connect_to_device", { device:device });
     }
 
     public static async startUpTask(): Promise<void> {

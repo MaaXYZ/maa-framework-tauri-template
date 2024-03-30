@@ -5,7 +5,7 @@ use tracing::{error, info, trace, trace_span};
 use crate::{
     callback::CallbackEventHandler,
     config::Config,
-    task::{AwardParam, StartUpParam, TaskRunningState, TaskStatus, TaskType},
+    task::{StartUpParam, TaskRunningState, TaskStatus, TaskType},
 };
 
 #[derive(Default, Serialize, Deserialize)]
@@ -84,11 +84,6 @@ impl TaskQueue {
                     let start_up_config = config.start_up.clone();
                     let start_up_param: StartUpParam = start_up_config.into();
                     handle.post_task(&entry, start_up_param)
-                }
-                TaskType::Award => {
-                    let award_config = config.award.clone();
-                    let award_param: AwardParam = award_config.into();
-                    handle.post_task(&entry, award_param)
                 }
             };
             task.id = Some(id);

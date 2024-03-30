@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 use serde_json::json;
 
 use crate::{
-    config::{award::AwardConfig, start_up::StartUpConfig},
+    config::start_up::StartUpConfig,
     MaaZError,
 };
 
@@ -39,7 +39,6 @@ impl TryFrom<String> for TaskType {
     fn try_from(value: String) -> Result<Self, Self::Error> {
         match value.as_str() {
             "StartUp" => Ok(TaskType::StartUp),
-            "Award" => Ok(TaskType::Award),
             _ => Err(MaaZError::UnknowTaskError(value)),
         }
     }
@@ -48,14 +47,12 @@ impl TryFrom<String> for TaskType {
 #[derive(Serialize, Deserialize, Clone, Copy, Debug)]
 pub enum TaskType {
     StartUp,
-    Award,
 }
 
 impl TaskType {
     pub fn get_string(self) -> String {
         match self {
             TaskType::StartUp => "start_up".to_owned(),
-            TaskType::Award => "award".to_owned(),
         }
     }
 }
@@ -91,11 +88,5 @@ pub struct AwardParam;
 impl TaskParam for AwardParam {
     fn get_param(&self) -> String {
         json!({}).to_string()
-    }
-}
-
-impl From<AwardConfig> for AwardParam {
-    fn from(_: AwardConfig) -> Self {
-        Self
     }
 }

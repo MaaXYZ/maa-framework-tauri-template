@@ -3,7 +3,6 @@ import { useTaskQueueStore } from "@/stores/TaskQueueStore";
 import { onMounted, ref, watch } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import CommandInvoker from "@/CommandInvoker";
-import { emit } from "@tauri-apps/api/event";
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
 
 const taskQueueStore = useTaskQueueStore();

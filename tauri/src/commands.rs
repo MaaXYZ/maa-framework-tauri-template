@@ -61,3 +61,18 @@ pub async fn set_window_on_top(window: Window, on_top: bool) -> MaaZResult<()> {
     window.set_always_on_top(on_top)?;
     Ok(())
 }
+
+#[tauri::command]
+pub async fn open_settings_window(app: AppHandle) -> MaaZResult<()> {
+    tauri::WebviewWindowBuilder::new(
+        &app,
+        "settings",
+        tauri::WebviewUrl::App("settings.html".into()),
+    )
+    .title("MaaZ Settings")
+    .inner_size(800.0, 600.0)
+    .build()?
+    .show()?;
+
+    Ok(())
+}

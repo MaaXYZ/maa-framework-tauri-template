@@ -42,8 +42,8 @@ pub async fn connect_to_device(
     let agent_path = "MaaAgentBinary";
 
     let controller_type = MaaAdbControllerType {
-        touch_type: controller::adb::MaaAdbControllerTouchType::MaaTouch,
-        key_type: controller::adb::MaaAdbControllerKeyType::MaaTouch,
+        touch_type: controller::adb::MaaAdbControllerTouchType::AutoDetect,
+        key_type: controller::adb::MaaAdbControllerKeyType::Invalid,
         screencap_type: controller::adb::MaaAdbControlScreencapType::MinicapDirect,
     };
 
