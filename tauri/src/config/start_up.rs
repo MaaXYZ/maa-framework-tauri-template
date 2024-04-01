@@ -1,6 +1,6 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Serialize, Deserialize, Default, Clone)]
+#[derive(Serialize, Deserialize, Default, Clone, Copy)]
 pub enum ClientType {
     #[default]
     Official,
@@ -8,8 +8,8 @@ pub enum ClientType {
 }
 
 impl ClientType {
-    pub fn get_package_name(&self) -> String {
-        match *self {
+    pub fn get_package_name(self) -> String {
+        match self {
             ClientType::Official => "com.hypergryph.arknights/com.u8.sdk.U8UnityContext".to_owned(),
             ClientType::Bilibili => "com.hypergryph.arknights.bilibili".to_owned(),
         }
@@ -25,7 +25,7 @@ impl From<String> for ClientType {
     }
 }
 
-#[derive(Serialize, Deserialize, Default, Clone)]
+#[derive(Serialize, Deserialize, Default, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub struct StartUpConfig {
     #[serde(default)]

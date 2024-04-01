@@ -2138,9 +2138,9 @@ dependencies = [
 
 [[package]]
 name = "maa-framework"
-version = "0.2.2"
+version = "0.2.4"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "0436338e0ed501e85ff7f3c259a15de949249225596bcb21235ba53abc456e5f"
+checksum = "7407d71f663b24c387282fc4bca0a945f2198079c479123bdc3e2f52b1e34d40"
 dependencies = [
  "bindgen",
  "serde",

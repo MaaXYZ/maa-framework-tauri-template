@@ -2,10 +2,7 @@ use maa_framework::instance::TaskParam;
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
-use crate::{
-    config::start_up::StartUpConfig,
-    MaaZError,
-};
+use crate::{config::start_up::StartUpConfig, MaaZError};
 
 #[derive(Serialize, Deserialize, Debug, Clone, Copy)]
 pub enum TaskRunningState {

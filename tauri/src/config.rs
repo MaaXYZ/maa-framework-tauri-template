@@ -6,10 +6,10 @@ use crate::MaaZInnerResult;
 
 use self::{app::AppConfig, start_up::StartUpConfig};
 
-pub mod start_up;
 pub mod app;
+pub mod start_up;
 
-#[derive(Serialize, Deserialize, Default, Clone)]
+#[derive(Serialize, Deserialize, Default, Clone, Copy)]
 #[serde(rename_all = "camelCase")]
 pub struct Config {
     #[serde(default)]
@@ -49,8 +49,8 @@ impl ConfigHolder {
         })
     }
 
-    pub fn config(&self) -> &Config {
-        &self.config
+    pub fn config(&self) -> Config {
+        self.config
     }
 
     pub fn write<F>(&mut self, f: F) -> MaaZInnerResult<()>

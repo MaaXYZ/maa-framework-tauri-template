@@ -14,7 +14,6 @@ use super::mock;
 
 #[tauri::command]
 pub async fn find_devices(toolkit: State<'_, MaaToolkit>) -> MaaZResult<Vec<AdbDeviceInfo>> {
-
     #[cfg(feature = "mock")]
     {
         let device = mock::mock_adb_device();
@@ -31,7 +30,6 @@ pub async fn connect_to_device(
     device: AdbDeviceInfo,
     controller: State<'_, Arc<ControllerInstance>>,
 ) -> MaaZResult<()> {
-
     #[cfg(feature = "mock")]
     {
         // return OK after 5s

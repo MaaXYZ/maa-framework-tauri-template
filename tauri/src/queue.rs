@@ -59,11 +59,7 @@ impl TaskQueue {
     }
 
     /// Mark the running task as completed and start the next task
-    pub fn run_next(
-        &mut self,
-        handle: &MaaInstance<CallbackEventHandler>,
-        config: &Config,
-    ) -> bool {
+    pub fn run_next(&mut self, handle: &MaaInstance<CallbackEventHandler>, config: Config) -> bool {
         let span = trace_span!("run_next");
         let _guard = span.enter();
         self.complete_running();
@@ -81,7 +77,7 @@ impl TaskQueue {
 
             let id = match task.task_type {
                 TaskType::StartUp => {
-                    let start_up_config = config.start_up.clone();
+                    let start_up_config = config.start_up;
                     let start_up_param: StartUpParam = start_up_config.into();
                     handle.post_task(&entry, start_up_param)
                 }
@@ -104,9 +100,8 @@ impl TaskQueue {
     pub fn start(
         &mut self,
         handle: &MaaInstance<CallbackEventHandler>,
-        config: &Config,
+        config: Config,
     ) -> QueueStartStatus {
-
         #[cfg(feature = "mock")]
         {
             return QueueStartStatus::Started;

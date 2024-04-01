@@ -8,7 +8,8 @@ pub fn mock_adb_device() -> AdbDeviceInfo {
         adb_controller_type: MaaAdbControllerType {
             touch_type: maa_framework::controller::adb::MaaAdbControllerTouchType::MaaTouch,
             key_type: maa_framework::controller::adb::MaaAdbControllerKeyType::MaaTouch,
-            screencap_type: maa_framework::controller::adb::MaaAdbControlScreencapType::MinicapDirect,
+            screencap_type:
+                maa_framework::controller::adb::MaaAdbControlScreencapType::MinicapDirect,
         },
         name: "MOCK Device".to_owned(),
     }

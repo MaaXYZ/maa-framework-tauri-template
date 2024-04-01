@@ -10,7 +10,7 @@ use std::sync::Arc;
 
 use maa_framework::{
     controller::MaaControllerInstance, instance::MaaInstance, resource::MaaResourceInstance,
-    toolkit::MaaToolkit
+    toolkit::MaaToolkit,
 };
 use queue::TaskQueue;
 use serde::Serialize;
@@ -41,10 +41,7 @@ pub type Instance = MaaInstance<CallbackEventHandler>;
 pub type ResourceInstance = MaaResourceInstance<CallbackEventHandler>;
 pub type ControllerInstance = Mutex<Option<MaaControllerInstance<CallbackEventHandler>>>;
 
-#[allow(clippy::unwrap_used)]
-// TODO: Error handle instead of expect
 pub fn run() {
-
     #[cfg(feature = "mock")]
     println!("Running in MOCK mode");
 
@@ -52,8 +49,6 @@ pub fn run() {
 
     tracing::info!("Starting Maa");
 
-    #[allow(clippy::expect_used)]
-    #[allow(clippy::str_to_string)]
     let ret = tauri::Builder::default()
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_notification::init())
@@ -74,7 +69,7 @@ pub fn run() {
 
             #[cfg(debug_assertions)]
             app.get_webview_window("main")
-                .expect("failed to get webview window")
+                .ok_or(MaaZError::WindowNotFoundError("main".to_owned()))?
                 .open_devtools();
 
             Ok(())
@@ -106,7 +101,6 @@ pub fn run() {
 }
 
 fn setup_app(app: &mut App) -> MaaZInnerResult<()> {
-
     let path = std::env::current_exe()?;
 
     let config_file = path.with_file_name("maa.toml");
@@ -170,32 +164,54 @@ pub type MaaZInnerResult<T> = Result<T, MaaZInnerError>;
 #[derive(Error, Debug)]
 pub enum MaaZInnerError {
     #[error("IO Error: {0}")]
-    IOError(#[from] std::io::Error, #[backtrace] std::backtrace::Backtrace),
+    IOError(
+        #[from] std::io::Error,
+        #[backtrace] std::backtrace::Backtrace,
+    ),
 
     #[error("TOML De Error: {0}")]
-    TOMLDeError(#[from] toml::de::Error, #[backtrace] std::backtrace::Backtrace),
+    TOMLDeError(
+        #[from] toml::de::Error,
+        #[backtrace] std::backtrace::Backtrace,
+    ),
 
     #[error("TOML Ser Error: {0}")]
-    TOMLSerError(#[from] toml::ser::Error, #[backtrace] std::backtrace::Backtrace),
+    TOMLSerError(
+        #[from] toml::ser::Error,
+        #[backtrace] std::backtrace::Backtrace,
+    ),
 
     #[error("Maa Error: {0}")]
-    MaaError(#[from] maa_framework::error::Error, #[backtrace] std::backtrace::Backtrace),
+    MaaError(
+        #[from] maa_framework::error::Error,
+        #[backtrace] std::backtrace::Backtrace,
+    ),
 }
 
 pub type MaaZResult<T> = Result<T, MaaZError>;
 
-#[derive(Serialize, Debug)]
+#[derive(Serialize, Debug, Error)]
 pub enum MaaZError {
+    #[error("UTF8 Error: {0}")]
     Utf8Error(String),
+    #[error("IO Error: {0}")]
     IOError(String),
+    #[error("Tauri Error: {0}")]
     TauriError(String),
+    #[error("Maa Error: {0}")]
     MaaError(String),
+    #[error("Resource Init Error")]
     ResourceInitError,
+    #[error("Connection Error")]
     ConnectionError,
+    #[error("Task Queue Did not Start")]
     QueueDidnotStart,
+    #[error("Unknow Task Error: {0}")]
     UnknowTaskError(String),
+    #[error("MaaZ Inner Error: {0}")]
     MaaZInnerError(String),
-    WindowNotFoundError(String)
+    #[error("Window Not Found Error: {0}")]
+    WindowNotFoundError(String),
 }
 
 impl From<std::str::Utf8Error> for MaaZError {
