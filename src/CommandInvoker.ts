@@ -2,6 +2,7 @@ import { invoke } from "@tauri-apps/api/core";
 import DeviceInfo from "./interface/DeviceInfo";
 import TaskStatus, { TaskType } from "./interface/TaskStatus";
 import { MaaConfig } from "./interface/MaaConfig";
+import { MaaAdbControllerType } from "./interface/AppConfig";
 
 export default class CommandInvoker {
     public static async initMaa(): Promise<void> {
@@ -13,7 +14,7 @@ export default class CommandInvoker {
     }
 
     public static async connectTo(device: DeviceInfo): Promise<void> {
-        return invoke("connect_to_device", { device:device });
+        return invoke("connect_to_device", { device: device });
     }
 
     public static async startUpTask(): Promise<void> {
@@ -59,6 +60,14 @@ export default class CommandInvoker {
     public static async setClientType(clientType: string): Promise<void> {
         return invoke("set_client_type", {
             value: clientType,
+        });
+    }
+
+    public static async setControllerType(
+        controllerType: MaaAdbControllerType
+    ): Promise<void> {
+        return invoke("set_controller_type", {
+            value: controllerType,
         });
     }
 

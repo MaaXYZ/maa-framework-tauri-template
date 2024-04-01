@@ -5,6 +5,8 @@ export default {
   },
   content: [
     "./index.html",
+    "./settings.html",
+    "./mini.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}"
   ],
   theme: {

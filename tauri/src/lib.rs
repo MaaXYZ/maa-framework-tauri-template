@@ -79,6 +79,7 @@ pub fn run() {
             commands::device::connect_to_device,
             commands::config::get_config,
             commands::config::set_client_type,
+            commands::config::set_controller_type,
             commands::task::add_task_to_queue,
             commands::task::start_queue,
             commands::task::stop_queue,

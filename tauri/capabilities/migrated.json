@@ -3,7 +3,7 @@
   "description": "permissions that were migrated from v1",
   "context": "local",
   "windows": [
-    "main","mini"
+    "main","mini","settings"
   ],
   "permissions": [
     "event:allow-listen",

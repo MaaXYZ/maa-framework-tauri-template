@@ -18,8 +18,7 @@ export const setupListener = () => {
         taskQueueStore.queueRunning = false;
     });
 
-    listen("mini_window_close", (_) => {
-        console.log("mini_window_close");
-        maaStateStore.miniWindowOpened = false;
-    })
+    listen("config-changed", (_event) => {
+        maaStateStore.getConfig();
+    });
 };
