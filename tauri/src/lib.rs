@@ -8,6 +8,7 @@ use std::error::request_ref;
 use std::process::exit;
 use std::sync::Arc;
 
+use config::ConfigHolder;
 use maa_framework::{
     controller::MaaControllerInstance, instance::MaaInstance, resource::MaaResourceInstance,
     toolkit::MaaToolkit,
@@ -105,7 +106,7 @@ fn setup_app(app: &mut App) -> MaaZInnerResult<()> {
     let path = std::env::current_exe()?;
 
     let config_file = path.with_file_name("maa.toml");
-    let config = config::ConfigHolder::new(config_file)?;
+    let config = ConfigHolder::new(config_file)?;
     let config = Arc::new(Mutex::new(config));
     app.manage(Arc::clone(&config));
 

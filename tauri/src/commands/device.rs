@@ -1,13 +1,13 @@
 use std::sync::Arc;
 
 use maa_framework::{
-    controller::{self, adb::MaaAdbControllerType},
+    controller,
     toolkit::{AdbDeviceInfo, MaaToolkit},
     MaaStatus,
 };
 use tauri::State;
 
-use crate::{ControllerInstance, Instance, MaaZError, MaaZResult};
+use crate::{ConfigHolderState, ControllerInstance, Instance, MaaZError, MaaZResult};
 
 #[cfg(feature = "mock")]
 use super::mock;
@@ -29,6 +29,7 @@ pub async fn connect_to_device(
     inst: State<'_, Arc<Instance>>,
     device: AdbDeviceInfo,
     controller: State<'_, Arc<ControllerInstance>>,
+    config: State<'_, ConfigHolderState>,
 ) -> MaaZResult<()> {
     #[cfg(feature = "mock")]
     {
@@ -39,11 +40,8 @@ pub async fn connect_to_device(
 
     let agent_path = "MaaAgentBinary";
 
-    let controller_type = MaaAdbControllerType {
-        touch_type: controller::adb::MaaAdbControllerTouchType::AutoDetect,
-        key_type: controller::adb::MaaAdbControllerKeyType::Invalid,
-        screencap_type: controller::adb::MaaAdbControlScreencapType::MinicapDirect,
-    };
+    let config = config.lock().await;
+    let controller_type = config.config().app_config.adb_controller_type;
 
     let controller_instance = controller::MaaControllerInstance::new_adb(
         &device.adb_path,
