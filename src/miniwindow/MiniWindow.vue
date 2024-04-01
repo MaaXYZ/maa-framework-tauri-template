@@ -4,6 +4,12 @@ import { onMounted, ref, watch } from "vue";
 import { invoke } from "@tauri-apps/api/core";
 import CommandInvoker from "@/CommandInvoker";
 import { WebviewWindow } from "@tauri-apps/api/webviewWindow";
+import "mdui/components/list";
+import "mdui/components/list-item";
+import "mdui/components/circular-progress";
+import "mdui/components/icon";
+import "mdui/components/checkbox";
+import "mdui/components/button";
 
 const taskQueueStore = useTaskQueueStore();
 
@@ -32,9 +38,12 @@ function closeWindow() {
 
 <template>
     <div class="select-none container h-screen">
-        <div class="relative flex justify-center items-center error-container h-10 close" @click="closeWindow">
-            <p class="error-text">Close</p>
-            <md-ripple></md-ripple>
+        <div
+            class="relative flex justify-center items-center error-container h-10 close"
+        >
+            <mdui-button variant="text" class="error-text" @click="closeWindow"
+                >Close</mdui-button
+            >
         </div>
         <div
             class="w-full flex items-center justify-center"
@@ -43,39 +52,41 @@ function closeWindow() {
             <p class="text-center text-gray-500">Queue Stopped</p>
         </div>
         <div class="flex flex-col" v-else>
-            <md-list>
-                <md-list-item v-for="task in taskQueueStore.taskQueue">
+            <mdui-list>
+                <mdui-list-item v-for="task in taskQueueStore.taskQueue">
                     <div class="items-center align-middle justify-center">
-                        <md-circular-progress
+                        <mdui-circular-progress
                             v-if="task.state === 'Running'"
-                        ></md-circular-progress>
-                        <md-icon
+                        ></mdui-circular-progress>
+                        <mdui-icon
                             size="small"
                             v-else-if="task.state === 'Failed'"
                         >
                             error
-                        </md-icon>
-                        <md-icon
+                        </mdui-icon>
+                        <mdui-icon
                             size="small"
                             v-else-if="task.state === 'Completed'"
                         >
                             done
-                        </md-icon>
+                        </mdui-icon>
                         <p>{{ task.taskType }}</p>
                     </div>
-                </md-list-item>
-            </md-list>
+                </mdui-list-item>
+            </mdui-list>
         </div>
 
-        <div class="flex fixed justify-center items-center gap-2 w-full bottom-4 hover:cursor-pointer"  @click="onTop = !onTop" >
-            <md-checkbox :checked="onTop"/>
+        <div
+            class="flex fixed justify-center items-center gap-2 w-full bottom-4 hover:cursor-pointer"
+            @click="onTop = !onTop"
+        >
+            <mdui-checkbox :checked="onTop" />
             Always on top
         </div>
     </div>
 </template>
 
 <style scoped>
-
 .close {
     transform: translateY(-100%);
     display: none;
@@ -98,5 +109,4 @@ function closeWindow() {
         height: 1.5rem;
     }
 }
-
 </style>

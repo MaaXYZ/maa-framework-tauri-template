@@ -6,6 +6,7 @@ import CommandInvoker from "./CommandInvoker";
 import { useMaaStateStore } from "./stores/MaaStateStore";
 import CloseIcon from "./assets/icons/CloseIcon.vue";
 import SettingsIcon from "./assets/icons/SettingsIcon.vue";
+import MinimizeIcon from "./assets/icons/MinimizeIcon.vue";
 
 const maaStateStore = useMaaStateStore();
 
@@ -18,6 +19,10 @@ onMounted(() => {
 
 function closeWindow() {
     CommandInvoker.closeWindow();
+}
+
+function minimizeWindow() {
+    CommandInvoker.minimizeWindow();
 }
 
 function openSettings() {
@@ -35,12 +40,21 @@ function openSettings() {
                 <span class="text-lg text-center font-bold">MAA Z</span>
             </div>
             <div class="controls">
-                <md-icon-button @click="openSettings">
-                    <SettingsIcon />
-                </md-icon-button>
-                <md-icon-button @click="closeWindow">
-                    <CloseIcon />
-                </md-icon-button>
+                <mdui-button-icon @click="openSettings">
+                    <mdui-icon>
+                        <SettingsIcon />
+                    </mdui-icon>
+                </mdui-button-icon>
+                <mdui-button-icon @click="minimizeWindow">
+                    <mdui-icon>
+                        <MinimizeIcon />
+                    </mdui-icon>
+                </mdui-button-icon>
+                <mdui-button-icon @click="closeWindow">
+                    <mdui-icon>
+                        <CloseIcon />
+                    </mdui-icon>
+                </mdui-button-icon>
             </div>
         </div>
         <div class="flex flex-row flex-grow">

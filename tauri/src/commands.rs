@@ -26,6 +26,9 @@ pub async fn init_maa(
     let span = trace_span!("init_maa");
     let _guard = span.enter();
 
+    #[cfg(feature = "mock")]
+    return Ok(());
+
     // init resources
     trace!("init resources");
     let resource_path = "resources";

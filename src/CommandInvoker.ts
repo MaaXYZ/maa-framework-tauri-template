@@ -70,6 +70,10 @@ export default class CommandInvoker {
         return invoke("close_window");
     }
 
+    public static async minimizeWindow(): Promise<void> {
+        return invoke("minimize_window");
+    }
+
     public static async openSettings(): Promise<void> {
         return invoke("open_settings_window");
     }

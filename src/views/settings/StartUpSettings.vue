@@ -38,6 +38,7 @@ watch(clientType, (v) => {
             <MdcSelect
                 v-model="clientType"
                 :options="clientTypeOptions"
+                variant="outlined"
             ></MdcSelect>
         </div>
     </div>

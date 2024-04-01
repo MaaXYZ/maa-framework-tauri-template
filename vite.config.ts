@@ -8,7 +8,7 @@ export default defineConfig(async () => ({
     vue({
       template: {
         compilerOptions: {
-          isCustomElement: tag => tag.startsWith('md-')
+          isCustomElement: tag => tag.startsWith('mdui-')
         }
       }
     })

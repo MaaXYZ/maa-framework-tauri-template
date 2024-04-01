@@ -3,12 +3,8 @@ import MiniWindow from "./MiniWindow.vue";
 import { createPinia } from "pinia";
 import "../styles/styles.css"
 import "../styles/theme.css"
+import 'mdui/mdui.css'
 import { setupListener } from "@/CallbackListner";
-
-import '@material/web/list/list'
-import '@material/web/list/list-item'
-import '@material/web/progress/circular-progress'
-import '@material/web/checkbox/checkbox'
 
 const app = createApp(MiniWindow);
 

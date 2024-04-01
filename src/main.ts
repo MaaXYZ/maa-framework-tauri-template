@@ -7,23 +7,16 @@ import { setupListener } from "./CallbackListner";
 import ToastPlugin from 'vue-toast-notification';
 import 'vue-toast-notification/dist/theme-sugar.css';
 
-import '@material/web/icon/icon'
-import '@material/web/iconbutton/icon-button'
-import '@material/web/iconbutton/outlined-icon-button'
-import '@material/web/button/filled-button'
-import '@material/web/button/outlined-button'
-import '@material/web/button/filled-tonal-button'
-import '@material/web/progress/circular-progress'
-import '@material/web/list/list'
-import '@material/web/list/list-item'
-import '@material/web/menu/menu'
-import '@material/web/menu/menu-item'
-import '@material/web/select/select-option'
-import '@material/web/select/filled-select'
-import '@material/web/select/outlined-select'
-import '@material/web/tabs/tabs'
-import '@material/web/tabs/secondary-tab'
-import '@material/web/ripple/ripple'
+import 'mdui/mdui.css';
+
+import 'mdui/components/button'
+import 'mdui/components/circular-progress'
+import 'mdui/components/button-icon'
+import "mdui/components/card";
+import 'mdui/components/linear-progress'
+import 'mdui/components/tabs'
+import 'mdui/components/tab'
+import 'mdui/components/tab-panel'
 
 const app = createApp(App);
 

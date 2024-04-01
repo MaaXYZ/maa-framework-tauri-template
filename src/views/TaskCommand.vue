@@ -57,17 +57,19 @@ function startMiniWindow() {
 
 <template>
     <div class="-mr-3 rounded-lg bg-white p-2 pt-4">
-        <md-filled-button class="w-full" @click="queueAction"
+        <mdui-button class="w-full" @click="queueAction"
             >Start
-            <PlayArrowIcon slot="icon" />
-        </md-filled-button>
+            <mdui-icon slot="icon">
+                <PlayArrowIcon />
+            </mdui-icon>
+        </mdui-button>
 
         <!-- TODO: figure out how to change state with mini window open state -->
-        <md-outlined-button class="w-full mt-2" @click="startMiniWindow"
-            >Mini Window</md-outlined-button
+        <mdui-button variant="outlined" class="w-full mt-2" @click="startMiniWindow"
+            >Mini Window</mdui-button
         >
         <div class="h-2" />
-        <md-filled-tonal-button
+        <mdui-button variant="tonal"
             secondary
             type="primary"
             class="w-full mb-2"
@@ -76,7 +78,7 @@ function startMiniWindow() {
             @click="addTask(task)"
         >
             {{ task }}
-        </md-filled-tonal-button>
+        </mdui-button>
     </div>
 </template>
 

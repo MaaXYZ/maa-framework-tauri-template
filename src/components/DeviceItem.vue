@@ -44,13 +44,17 @@ function connectToDevice() {
                 {{ props.device.adb_serial }}
             </p>
         </div>
-        <md-outlined-icon-button
+        <mdui-button-icon
+            variant="outlined"
             :disabled="deviceConnected"
             @click="connectToDevice"
+            v-if="!deviceConnecting"
         >
-            <DoneIcon color="#55EE55" v-if="deviceConnected" />
-            <SendIcon v-else-if="!deviceConnecting" />
-            <md-circular-progress indeterminate v-if="deviceConnecting" />
-        </md-outlined-icon-button>
+            <mdui-icon>
+                <DoneIcon v-if="deviceConnected" />
+                <SendIcon v-else-if="!deviceConnecting" />
+            </mdui-icon>
+        </mdui-button-icon>
+        <mdui-circular-progress v-else></mdui-circular-progress>
     </div>
 </template>

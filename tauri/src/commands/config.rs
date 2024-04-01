@@ -5,7 +5,7 @@ use crate::{config::Config, ConfigHolderState, MaaZResult};
 #[tauri::command]
 pub async fn get_config(config_holder: State<'_, ConfigHolderState>) -> MaaZResult<Config> {
     let config_holder = config_holder.lock().await;
-    Ok(config_holder.config().clone())
+    Ok(config_holder.config())
 }
 
 macro_rules! config_writer {

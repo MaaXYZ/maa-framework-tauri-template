@@ -2,6 +2,10 @@
 import { computed, onMounted, ref } from "vue";
 import DeviceItem from "@/components/DeviceItem.vue";
 import { useDeviceStateStore } from "@/stores/DeviceStateStore";
+import 'mdui/components/circular-progress'
+import 'mdui/components/button'
+import 'mdui/components/list'
+import 'mdui/components/list-item'
 
 const loadingDevices = ref(true);
 
@@ -42,7 +46,7 @@ function loadDevices() {
             class="title_secondary flex flex-row items-center align-middle justify-center"
             v-if="loadingDevices"
         >
-            <md-circular-progress indeterminate></md-circular-progress>Searching
+            <mdui-circular-progress></mdui-circular-progress>Searching
             for devices...
         </div>
         <div
@@ -50,20 +54,20 @@ function loadDevices() {
             v-else-if="deviceStateStore.devices.length == 0"
         >
             <p class="title_secondary">No devices found</p>
-            <md-filled-button @click="loadDevices" strong type="primary" class="mx-4">
+            <mdui-button @click="loadDevices" strong variant="filled" class="mx-4">
                 Rescan Devices
-            </md-filled-button>
+            </mdui-button>
         </div>
         <div class="flex flex-col justify-center items-center" v-else>
             <p>Available Devices</p>
-            <md-list class="device_list">
-                <md-list-item
+            <mdui-list class="device_list">
+                <mdui-list-item
                     v-for="device in deviceStateStore.devices"
                     :key="device.name"
                 >
                     <device-item :device="device" />
-                </md-list-item>
-            </md-list>
+                </mdui-list-item>
+            </mdui-list>
         </div>
     </div>
 </template>

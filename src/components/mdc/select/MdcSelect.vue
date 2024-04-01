@@ -1,27 +1,24 @@
 <script setup lang="ts" generic="T">
-import { computed, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { SelectOption, SelectVariant } from './SelectProps';
-import { MdFilledSelect } from '@material/web/select/filled-select';
-import { MdOutlinedSelect } from '@material/web/select/outlined-select';
+import 'mdui/components/select'
+import 'mdui/components/menu-item'
+import type { Select } from 'mdui/components/select'
 
-const props = defineProps<{
+defineProps<{
     options?: SelectOption[];
     variant?: SelectVariant;
 }>();
 
 const value = defineModel<string>()
 
-const selectElement = ref<MdFilledSelect | MdOutlinedSelect | null>(null);
-
-const componentName = computed(() => {
-    return props.variant === 'outlined' ? 'md-outlined-select' : 'md-filled-select';
-});
+const selectElement = ref<Select | null>(null);
 
 onMounted(() => {
     if (selectElement.value) {
         selectElement.value.value = value.value ?? '';
-        selectElement.value.addEventListener('closed', ()=>{
-            value.value = selectElement.value?.value;
+        selectElement.value.addEventListener('change', ()=>{
+            value.value = selectElement.value?.value as string | undefined
         })
     }
 });
@@ -30,10 +27,10 @@ onMounted(() => {
 
 <template>
     <div class="container w-fit">
-        <component :is="componentName" ref="selectElement">
-            <md-select-option v-for="option in options" :value="option.value">
+        <mdui-select :variant="variant" ref="selectElement" :value="value">
+            <mdui-menu-item v-for="option in options" :value="option.value">
                 {{ option.label }}
-            </md-select-option>
-        </component>
+            </mdui-menu-item>
+        </mdui-select>
     </div>
 </template>
