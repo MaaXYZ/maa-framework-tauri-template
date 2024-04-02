@@ -7,7 +7,7 @@ from tqdm import tqdm
 import zipfile
 
 # Dependency versions
-maafw_version = "v1.7.0-alpha.1"
+maafw_version = "v1.7.0-alpha.2"
 
 def copy_file_recursively(src, dst, system):
     if os.path.isdir(src):
