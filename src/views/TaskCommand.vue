@@ -1,29 +1,24 @@
 <script setup lang="ts">
 import { useTaskQueueStore } from "@/stores/TaskQueueStore";
-import { ref, watch } from "vue";
+import { computed } from "vue";
 import { TaskType, allTaskTypes } from "@/interface/TaskStatus";
 import CommandInvoker from "@/CommandInvoker";
 import { useToast } from "vue-toast-notification";
 import { useMaaStateStore } from "@/stores/MaaStateStore";
 import PlayArrowIcon from "@/assets/icons/PlayArrowIcon.vue";
+import StopIcon from "@/assets/icons/StopIcon.vue";
 
 const taskQueueStore = useTaskQueueStore();
 const maaStateStore = useMaaStateStore();
 
 const toast = useToast();
 
-const outer = ref<HTMLDivElement | null>(null);
-const outerHeight = ref(0);
 
-watch(outer, (el) => {
-    if (el) {
-        outerHeight.value = el.clientWidth;
-    }
-});
-
-window.addEventListener("resize", () => {
-    if (outer.value) {
-        outerHeight.value = outer.value.clientWidth;
+const taskQueueActionText = computed(() => {
+    if (taskQueueStore.queueRunning) {
+        return "Stop";
+    } else {
+        return "Start";
     }
 });
 
@@ -58,9 +53,10 @@ function startMiniWindow() {
 <template>
     <div class="-mr-3 rounded-lg bg-white p-2 pt-4">
         <mdui-button class="w-full" @click="queueAction"
-            >Start
+            >{{ taskQueueActionText }}
             <mdui-icon slot="icon">
-                <PlayArrowIcon />
+                <StopIcon v-if="taskQueueStore.queueRunning"/>
+                <PlayArrowIcon v-else/>
             </mdui-icon>
         </mdui-button>
 
