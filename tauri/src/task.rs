@@ -30,29 +30,35 @@ impl From<TaskType> for TaskStatus {
     }
 }
 
-impl TryFrom<String> for TaskType {
-    type Error = MaaZError;
-
-    fn try_from(value: String) -> Result<Self, Self::Error> {
-        match value.as_str() {
-            "StartUp" => Ok(TaskType::StartUp),
-            _ => Err(MaaZError::UnknowTaskError(value)),
+macro_rules! task_type {
+    ($($variant:ident),+) => {
+        #[derive(Serialize, Deserialize, Clone, Copy, Debug)]
+        pub enum TaskType {
+            $($variant),+
         }
-    }
-}
 
-#[derive(Serialize, Deserialize, Clone, Copy, Debug)]
-pub enum TaskType {
-    StartUp,
-}
-
-impl TaskType {
-    pub fn get_string(self) -> String {
-        match self {
-            TaskType::StartUp => "start_up".to_owned(),
+        impl TaskType {
+            pub fn get_string(self) -> String {
+                match self {
+                    $(TaskType::$variant => stringify!($variant).to_owned()),+
+                }
+            }
         }
-    }
+
+        impl TryFrom<String> for TaskType {
+            type Error = MaaZError;
+
+            fn try_from(value: String) -> Result<Self, Self::Error> {
+                match value.as_str() {
+                    $(stringify!($variant) => Ok(TaskType::$variant),)+
+                    _ => Err(MaaZError::UnknowTaskError(value)),
+                }
+            }
+        }
+    };
 }
+
+task_type!(StartUp);
 
 #[derive(Serialize)]
 pub struct StartUpParam {
