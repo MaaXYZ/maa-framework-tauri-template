@@ -48,21 +48,25 @@ impl TaskQueue {
     }
 
     /// Mark the running task as completed
-    pub fn complete_running(&mut self) {
+    pub fn complete_running(&mut self, success: bool) {
         if let Some(index) = self
             .queue
             .iter()
             .position(|t| matches!(t.state, TaskRunningState::Running))
         {
-            self.queue[index].state = TaskRunningState::Completed;
+            self.queue[index].state = if success {
+                TaskRunningState::Completed
+            } else {
+                TaskRunningState::Failed
+            };
         }
     }
 
     /// Mark the running task as completed and start the next task
-    pub fn run_next(&mut self, handle: &MaaInstance<CallbackEventHandler>, config: Config) -> bool {
+    pub fn run_next(&mut self, handle: &MaaInstance<CallbackEventHandler>, config: Config,success: bool) -> bool {
         let span = trace_span!("run_next");
         let _guard = span.enter();
-        self.complete_running();
+        self.complete_running(success);
         trace!("Running next task");
         if let Some(index) = self
             .queue
@@ -121,22 +125,15 @@ impl TaskQueue {
             return QueueStartStatus::NoPendingTasks;
         }
 
-        self.run_next(handle, config);
+        self.run_next(handle, config, true);
         QueueStartStatus::Started
     }
 
     /// This sends a stop signal to fw and mark the running task as Pending
-    pub fn stop(&mut self, handle: &MaaInstance<CallbackEventHandler>) {
+    pub fn stop(handle: &MaaInstance<CallbackEventHandler>) {
         let stop_ret = handle.post_stop();
         if stop_ret.is_err() {
             error!("Error while stopping task");
-        }
-        if let Some(index) = self
-            .queue
-            .iter()
-            .position(|t| matches!(t.state, TaskRunningState::Running))
-        {
-            self.queue[index].state = TaskRunningState::Pending;
         }
     }
 }
