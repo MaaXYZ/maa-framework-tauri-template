@@ -17,6 +17,9 @@ import 'mdui/components/linear-progress'
 import 'mdui/components/tabs'
 import 'mdui/components/tab'
 import 'mdui/components/tab-panel'
+import 'mdui/components/dropdown'
+import 'mdui/components/menu'
+import 'mdui/components/menu-item'
 
 const app = createApp(App);
 

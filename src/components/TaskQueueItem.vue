@@ -1,52 +1,39 @@
 <script setup lang="ts">
 import TaskStatus from "@/interface/TaskStatus";
-import { computed, ref } from "vue";
+import { useTaskQueueStore } from "@/stores/TaskQueueStore";
+
+const taskQueueStore = useTaskQueueStore();
 
 const props = defineProps<{
     index: number;
     task: TaskStatus;
 }>();
 
-const showRemoveButton = ref(false);
-
-function mouseEnter() {
-    if (props.task.state !== "Running") {
-        showRemoveButton.value = true;
-    }
+function removeCurrent() {
+    taskQueueStore.removeFromQueue(props.index);
 }
 
-function mouseLeave() {
-    showRemoveButton.value = false;
-}
-
-const backgroundColor = computed(() => {
-    if (props.task.state === "Running") {
-        return "#FFD700";
-    } else if (props.task.state === "Completed") {
-        return "#00FF00";
-    } else if (props.task.state === "Failed") {
-        return "#FF0000";
-    } else {
-        return "#EBEBE4";
-    }
-});
 </script>
 
 <template>
-    <div
-        @mouseenter="mouseEnter"
-        :style="{ backgroundColor: backgroundColor }"
-        @mouseleave="mouseLeave"
-        ref="outer"
-        class="item mx-1 text-center items-center shadow relative"
-    >
-        <mdui-card clickable class="flex flex-col w-full h-full layer">
-            <p class="text-center">{{ props.task.taskType }}</p>
-            <mdui-linear-progress
-                v-if="props.task.state === 'Running'"
-                class="w-11/12"
-            ></mdui-linear-progress>
-        </mdui-card>
+    <div ref="outer" class="item mx-1 text-center items-center shadow relative">
+        <mdui-dropdown trigger="contextmenu" placement="bottom-end">
+            <mdui-card
+                clickable
+                slot="trigger"
+                class="flex flex-col w-full h-full layer"
+            >
+                <p class="text-center">{{ props.task.taskType }}</p>
+                <mdui-linear-progress
+                    v-if="props.task.state === 'Running'"
+                ></mdui-linear-progress>
+            </mdui-card>
+            <mdui-menu>
+                <mdui-menu-item @click="removeCurrent">
+                    Remove
+                </mdui-menu-item>
+            </mdui-menu>
+        </mdui-dropdown>
     </div>
 </template>
 
