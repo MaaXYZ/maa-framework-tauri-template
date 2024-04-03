@@ -3,16 +3,13 @@ import { useTaskQueueStore } from "@/stores/TaskQueueStore";
 import { computed } from "vue";
 import { TaskType, allTaskTypes } from "@/interface/TaskStatus";
 import CommandInvoker from "@/CommandInvoker";
-import { useToast } from "vue-toast-notification";
 import { useMaaStateStore } from "@/stores/MaaStateStore";
 import PlayArrowIcon from "@/assets/icons/PlayArrowIcon.vue";
 import StopIcon from "@/assets/icons/StopIcon.vue";
+import { snackbar } from "mdui/functions/snackbar";
 
 const taskQueueStore = useTaskQueueStore();
 const maaStateStore = useMaaStateStore();
-
-const toast = useToast();
-
 
 const taskQueueActionText = computed(() => {
     if (taskQueueStore.queueRunning) {
@@ -29,13 +26,17 @@ function queueAction() {
     } else if (taskQueueStore.hasPendingTasks) {
         taskQueueStore.startQueue();
     } else {
-        toast.warning("No task in queue");
+        snackbar({
+            message: "No tasks to run",
+        });
     }
 }
 
 function addTask(task: TaskType) {
     taskQueueStore.addToQueue(task).catch((err) => {
-        toast.error(err.message);
+        snackbar({
+            message: err.message,
+        });
     });
 }
 
@@ -45,7 +46,10 @@ function startMiniWindow() {
             maaStateStore.miniWindowOpened = true;
         })
         .catch((e) => {
-            toast.error(e.message);
+            console.error(e);
+            snackbar({
+                message: "Failed to start mini window",
+            });
         });
 }
 </script>
