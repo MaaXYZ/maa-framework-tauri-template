@@ -6,6 +6,15 @@ This is a template for creating a MaaFramework front end with Tauri.
 
 Note that the building process is only currently tested and supported on Windows. Support for Linux is planned.
 
+### MaaAgentBinary
+
+This repo contains the `MaaAgentBinary` as a submodule. You need to clone this repo with the `--recurse-submodules` flag or run the following commands after cloning:
+
+```bash
+git submodule init
+git submodule update
+```
+
 ### MaaFramework
 
 You need to have a latest version of MaaFramework installed in your system. If you already have, make sure that CMake can find it. The easiest way to do this is to add your MaaFramework installation directory to your `CMAKE_PREFIX_PATH` or `PATH` environment variable.
