@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import DeviceConnection from "./views/DeviceConnection.vue";
 import TaskDispatch from "./views/TaskDispatch.vue";
-import { onMounted } from "vue";
+import { onMounted, ref } from "vue";
 import CommandInvoker from "./CommandInvoker";
 import { useMaaStateStore } from "./stores/MaaStateStore";
 import CloseIcon from "./assets/icons/CloseIcon.vue";
 import SettingsIcon from "./assets/icons/SettingsIcon.vue";
 import MinimizeIcon from "./assets/icons/MinimizeIcon.vue";
+import LightIcon from "./assets/icons/LightIcon.vue";
+import DarkIcon from "./assets/icons/DarkIcon.vue";
+import { getTheme } from "mdui/functions/getTheme";
+import { setTheme } from "mdui/functions/setTheme";
 
 const maaStateStore = useMaaStateStore();
 
@@ -28,21 +32,40 @@ function minimizeWindow() {
 function openSettings() {
     CommandInvoker.openSettings();
 }
+
+const theme = ref(getTheme());
+
+function toggleTheme() {
+    if (theme.value === "light") {
+        setTheme("dark");
+        theme.value = "dark";
+    } else {
+        setTheme("light");
+        theme.value = "light";
+    }
+}
 </script>
 
 <template>
-    <div class="h-screen w-full flex flex-col select-none">
-        <div
-            data-tauri-drag-region
-            class="app-heade h-10 select-none flex flex-row items-center justify-between p-2"
-        >
-            <div class="header">
-                <span class="text-lg text-center font-bold">MAA Z</span>
-            </div>
+    <mdui-layout class="h-screen w-full flex flex-col select-none">
+        <mdui-top-app-bar data-tauri-drag-region>
+            <mdui-top-app-bar-title data-tauri-drag-region
+                >MAAZ</mdui-top-app-bar-title
+            >
             <div class="controls">
                 <mdui-button-icon @click="openSettings">
                     <mdui-icon>
                         <SettingsIcon />
+                    </mdui-icon>
+                </mdui-button-icon>
+                <mdui-button-icon @click="toggleTheme">
+                    <mdui-icon>
+                        <mdui-icon v-if="theme === 'light'">
+                            <LightIcon />
+                        </mdui-icon>
+                        <mdui-icon v-else>
+                            <DarkIcon />
+                        </mdui-icon>
                     </mdui-icon>
                 </mdui-button-icon>
                 <mdui-button-icon @click="minimizeWindow">
@@ -56,24 +79,22 @@ function openSettings() {
                     </mdui-icon>
                 </mdui-button-icon>
             </div>
-        </div>
-        <div class="flex flex-row flex-grow">
+        </mdui-top-app-bar>
+        <mdui-layout-item placement="left">
             <device-connection class="conn" />
+        </mdui-layout-item>
+        <mdui-layout-main class="flex flex-row flex-grow">
             <task-dispatch class="taskd" />
-        </div>
-    </div>
+        </mdui-layout-main>
+    </mdui-layout>
 </template>
 
 <style scoped>
 .conn {
-    width: 30%;
+    width: 30vw;
 }
 
 .taskd {
-    width: 70%;
-}
-
-.app_header {
-    background-color: var(--md-sys-color-surface);
+    width: 70vw;
 }
 </style>

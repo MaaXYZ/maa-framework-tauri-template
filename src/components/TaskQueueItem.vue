@@ -14,33 +14,37 @@ const props = defineProps<{
 function removeCurrent() {
     taskQueueStore.removeFromQueue(props.index);
 }
-
 </script>
 
 <template>
-    <div ref="outer" class="item mx-1 text-center items-center shadow relative">
-        <mdui-dropdown :trigger="task.state==='Running' ? 'manual' : 'contextmenu' " placement="bottom-end">
+    <div ref="outer" class="item mx-1 text-center items-center">
+        <mdui-dropdown
+            :trigger="task.state === 'Running' ? 'manual' : 'contextmenu'"
+            placement="bottom-end"
+        >
             <mdui-card
                 :clickable="task.state === 'Pending'"
                 slot="trigger"
                 class="flex flex-col w-full h-full layer"
             >
                 <p class="text-center">
-                    <mdui-icon v-if="task.state==='Completed'">
+                    <mdui-icon v-if="task.state === 'Completed'">
                         <DoneIcon />
                     </mdui-icon>
-                    <mdui-icon v-if="task.state==='Failed'" style="color: red;">
+                    <mdui-icon
+                        v-if="task.state === 'Failed'"
+                        style="color: red"
+                    >
                         <CloseIcon />
                     </mdui-icon>
-                    {{ props.task.taskType }}</p>
+                    {{ props.task.taskType }}
+                </p>
                 <mdui-linear-progress
                     v-if="props.task.state === 'Running'"
                 ></mdui-linear-progress>
             </mdui-card>
             <mdui-menu>
-                <mdui-menu-item @click="removeCurrent">
-                    Remove
-                </mdui-menu-item>
+                <mdui-menu-item @click="removeCurrent"> Remove </mdui-menu-item>
             </mdui-menu>
         </mdui-dropdown>
     </div>
@@ -51,7 +55,5 @@ function removeCurrent() {
     min-width: 150px;
     width: 150px;
     height: 60px;
-    border-radius: 0.5rem;
-    background-color: var(--md-ref-palette-neutral95);
 }
 </style>

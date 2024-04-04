@@ -4,8 +4,6 @@ import "./styles/theme.css";
 import App from "./App.vue";
 import { createPinia } from "pinia";
 import { setupListener } from "./CallbackListner";
-import ToastPlugin from 'vue-toast-notification';
-import 'vue-toast-notification/dist/theme-sugar.css';
 
 import 'mdui/mdui.css';
 
@@ -20,13 +18,16 @@ import 'mdui/components/tab-panel'
 import 'mdui/components/dropdown'
 import 'mdui/components/menu'
 import 'mdui/components/menu-item'
+import 'mdui/components/layout'
+import 'mdui/components/layout-item'
+import 'mdui/components/layout-main'
+import 'mdui/components/top-app-bar'
+import 'mdui/components/top-app-bar-title'
 
 const app = createApp(App);
 
 const pinia = createPinia();
 app.use(pinia);
-
-app.use(ToastPlugin)
 
 setupListener();
 
