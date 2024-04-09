@@ -3,11 +3,9 @@ import { ref, watch } from "vue";
 import { ClientType, allClientTypes } from "@/interface/StartUpConfig";
 import { useMaaStateStore } from "@/stores/MaaStateStore";
 import MdcSelect from "@/components/mdc/select/MdcSelect.vue";
-import { useToast } from "vue-toast-notification";
+import { snackbar } from "mdui/functions/snackbar";
 
 const maaStateStore = useMaaStateStore();
-
-const toast = useToast();
 
 const clientTypeOptions = allClientTypes.map((cType) => {
     return {
@@ -22,7 +20,9 @@ const clientType = ref<ClientType>(
 
 function setClientType(v: ClientType) {
     maaStateStore.setClientType(v).catch((error) => {
-        toast.error(error.message);
+        snackbar({
+            message: error.message,
+        });
     });
 }
 
