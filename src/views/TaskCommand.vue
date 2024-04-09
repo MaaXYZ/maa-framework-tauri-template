@@ -55,21 +55,25 @@ function startMiniWindow() {
 </script>
 
 <template>
-    <div class="-mr-3 rounded-lg bg-white p-2 pt-4">
+    <div class="-mr-3 rounded-lg p-2 pt-4">
         <mdui-button class="w-full" @click="queueAction"
             >{{ taskQueueActionText }}
             <mdui-icon slot="icon">
-                <StopIcon v-if="taskQueueStore.queueRunning"/>
-                <PlayArrowIcon v-else/>
+                <StopIcon v-if="taskQueueStore.queueRunning" />
+                <PlayArrowIcon v-else />
             </mdui-icon>
         </mdui-button>
 
         <!-- TODO: figure out how to change state with mini window open state -->
-        <mdui-button variant="outlined" class="w-full mt-2" @click="startMiniWindow"
+        <mdui-button
+            variant="outlined"
+            class="w-full mt-2"
+            @click="startMiniWindow"
             >Mini Window</mdui-button
         >
         <div class="h-2" />
-        <mdui-button variant="tonal"
+        <mdui-button
+            variant="tonal"
             secondary
             type="primary"
             class="w-full mb-2"

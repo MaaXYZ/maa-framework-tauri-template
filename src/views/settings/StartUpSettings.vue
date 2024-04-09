@@ -34,7 +34,7 @@ watch(clientType, (v) => {
 <template>
     <div>
         <div class="settings_item flex flex-row justify-between">
-            <p class="label">Client Type</p>
+            <p>Client Type</p>
             <MdcSelect
                 v-model="clientType"
                 :options="clientTypeOptions"

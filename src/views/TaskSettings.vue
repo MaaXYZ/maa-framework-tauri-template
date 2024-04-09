@@ -7,15 +7,20 @@ const tabs = {
     StartUp: StartUpSettings,
     Award: EmptySettings,
 };
-
 </script>
 
 <template>
-    <div class="mx-2 rounded-lg bg-white">
+    <div class="mx-2 rounded-lg">
         <mdui-tabs value="StartUp">
-            <mdui-tab v-for="taskType in allTaskTypes" :value="taskType">{{ taskType }}</mdui-tab>
+            <mdui-tab v-for="taskType in allTaskTypes" :value="taskType">{{
+                taskType
+            }}</mdui-tab>
 
-            <mdui-tab-panel slot="panel" v-for="taskType in allTaskTypes" :value="taskType">
+            <mdui-tab-panel
+                slot="panel"
+                v-for="taskType in allTaskTypes"
+                :value="taskType"
+            >
                 <component :is="tabs[taskType]" />
             </mdui-tab-panel>
         </mdui-tabs>

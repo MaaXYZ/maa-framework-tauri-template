@@ -55,7 +55,9 @@ function closeWindow() {
         <div class="flex flex-col" v-else>
             <mdui-list>
                 <mdui-list-item v-for="task in taskQueueStore.taskQueue">
-                    <div class="items-center align-middle justify-center">
+                    <div
+                        class="flex flex-col items-center align-middle justify-center"
+                    >
                         <mdui-circular-progress
                             v-if="task.state === 'Running'"
                         ></mdui-circular-progress>
