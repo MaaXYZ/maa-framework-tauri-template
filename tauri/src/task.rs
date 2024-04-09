@@ -1,4 +1,4 @@
-use maa_framework::instance::TaskParam;
+use maa_framework::{diff_task::DiffTaskBuilder, instance::TaskParam};
 use serde::{Deserialize, Serialize};
 use serde_json::json;
 
@@ -60,22 +60,27 @@ macro_rules! task_type {
 
 task_type!(StartUp);
 
-#[derive(Serialize)]
 pub struct StartUpParam {
     pub package: String,
 }
 
-impl TaskParam for StartUpParam {
-    fn get_param(&self) -> String {
-        let inner = json!({
-            "package": self.package
-        });
+impl Serialize for StartUpParam {
+    fn serialize<S>(&self, serializer: S) -> Result<S::Ok, S::Error>
+    where
+        S: serde::ser::Serializer,
+    {
+        let diff_task = DiffTaskBuilder::default()
+            .package(Some(self.package.clone()))
+            .build()
+            .ok();
         json!({
-            "sub_start_app": inner
+            "sub_start_app": diff_task
         })
-        .to_string()
+        .serialize(serializer)
     }
 }
+
+impl TaskParam for StartUpParam {}
 
 impl From<StartUpConfig> for StartUpParam {
     fn from(config: StartUpConfig) -> Self {
@@ -88,8 +93,4 @@ impl From<StartUpConfig> for StartUpParam {
 #[derive(Serialize)]
 pub struct AwardParam;
 
-impl TaskParam for AwardParam {
-    fn get_param(&self) -> String {
-        json!({}).to_string()
-    }
-}
+impl TaskParam for AwardParam {}

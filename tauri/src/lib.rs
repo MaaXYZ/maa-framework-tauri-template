@@ -134,7 +134,6 @@ fn setup_app(app: &mut App) -> MaaZInnerResult<()> {
         setup_callback(
             app_handle,
             Arc::clone(&task_queue),
-            config,
             Arc::clone(&instance),
             receiver,
         )
