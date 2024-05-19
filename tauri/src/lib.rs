@@ -15,6 +15,7 @@ use maa_framework::{
 };
 use queue::TaskQueue;
 use serde::Serialize;
+use serde_json::json;
 use tauri::{
     async_runtime::{channel, spawn, Mutex},
     App, Manager,
@@ -119,7 +120,7 @@ fn setup_app(app: &mut App) -> MaaZInnerResult<()> {
     let instance = Arc::new(instance);
     app.manage(Arc::clone(&instance));
 
-    let toolkit = MaaToolkit::new()?;
+    let toolkit = MaaToolkit::new_with_options("./".to_owned(), json!({}))?;
     app.manage(toolkit);
 
     let controller = ControllerInstance::default();
